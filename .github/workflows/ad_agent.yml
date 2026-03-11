@@ -1,0 +1,217 @@
+# ============================================================
+# ACME AD AGENT — GitHub Actions Workflow
+# ============================================================
+# This file tells GitHub to automatically run your scripts
+# on a schedule, without you needing to touch your computer.
+#
+# HOW TO READ THIS FILE:
+#   "on:"        → WHEN to run (the trigger)
+#   "jobs:"      → WHAT to do when triggered
+#   "steps:"     → The individual actions inside each job
+# ============================================================
+
+
+# ── TRIGGER 1: GRADER ───────────────────────────────────────
+# Runs grader.py every 6 hours to check ad performance.
+# Cron format is: minute / hour / day / month / day-of-week
+# "0 */6 * * *" means: at minute 0, every 6 hours, every day.
+
+name: Ad Agent Scheduler
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # Grader: runs every 6 hours
+    - cron: "0 9 * * 0"     # Memory Manager: runs every Sunday at 9am UTC
+
+  # This lets you also click a "Run" button manually in GitHub
+  # which is useful for testing without waiting for the schedule
+  workflow_dispatch:
+    inputs:
+      script_to_run:
+        description: "Which script to run manually?"
+        required: true
+        default: "grader"
+        type: choice
+        options:
+          - grader
+          - orchestrator
+          - publisher
+          - memory_manager
+
+
+jobs:
+
+  # ── JOB 1: GRADER (runs every 6 hours) ────────────────────
+  run-grader:
+    # Only run this job when triggered by the 6-hour schedule
+    # OR when manually triggered with "grader" selected
+    if: >
+      github.event_name == 'workflow_dispatch' && github.event.inputs.script_to_run == 'grader' ||
+      github.event_name == 'schedule' && github.event.schedule == '0 */6 * * *'
+
+    runs-on: ubuntu-latest   # GitHub spins up a fresh Linux computer
+
+    steps:
+      # Step 1: Download your repo code onto GitHub's computer
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Step 3: Install your project's dependencies from requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Step 4: Restore the experiment log from the last run
+      # (GitHub's computer is wiped clean after every run,
+      # so we save files to the "cache" between runs)
+      - name: Restore experiment log
+        uses: actions/cache@v4
+        with:
+          path: |
+            experiment_log.json
+            challenger.json
+          key: agent-state-${{ github.run_id }}
+          restore-keys: agent-state-
+
+      # Step 5: Run the grader script
+      # The "env:" block is how your API keys get loaded —
+      # they come from GitHub Secrets (Settings → Secrets → Actions)
+      - name: Run grader.py
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          META_AD_ACCOUNT_ID: ${{ secrets.META_AD_ACCOUNT_ID }}
+          META_PAGE_ID: ${{ secrets.META_PAGE_ID }}
+        run: python grader.py
+
+      # Step 6: Save the updated experiment log for the next run
+      - name: Save experiment log
+        uses: actions/cache@v4
+        with:
+          path: |
+            experiment_log.json
+            challenger.json
+          key: agent-state-${{ github.run_id }}
+
+
+  # ── JOB 2: MEMORY MANAGER (runs every Sunday at 9am) ──────
+  run-memory-manager:
+    if: >
+      github.event_name == 'workflow_dispatch' && github.event.inputs.script_to_run == 'memory_manager' ||
+      github.event_name == 'schedule' && github.event.schedule == '0 9 * * 0'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Restore experiment log
+        uses: actions/cache@v4
+        with:
+          path: experiment_log.json
+          key: agent-state-${{ github.run_id }}
+          restore-keys: agent-state-
+
+      - name: Run memory_manager.py
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python memory_manager.py
+
+      # After memory_manager updates baseline.md, commit it back
+      # to your repo so the AI's new insights are permanently saved
+      - name: Commit updated baseline.md back to repo
+        run: |
+          git config user.name "Artie Bot"
+          git config user.email "artie@acme-ad-agent.bot"
+          git add baseline.md
+          git diff --staged --quiet || git commit -m "🧠 Weekly AI insights update [automated]"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  # ── JOB 3: ORCHESTRATOR (manual trigger only) ─────────────
+  # You run this manually when you want to generate a new challenger
+  run-orchestrator:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.script_to_run == 'orchestrator'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run orchestrator.py
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python orchestrator.py
+
+      # Save the generated challenger.json so publisher can use it
+      - name: Save challenger ad
+        uses: actions/cache@v4
+        with:
+          path: challenger.json
+          key: agent-state-${{ github.run_id }}
+
+
+  # ── JOB 4: PUBLISHER (manual trigger only) ────────────────
+  # You run this manually after reviewing the challenger ad
+  run-publisher:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.script_to_run == 'publisher'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Restore challenger ad
+        uses: actions/cache@v4
+        with:
+          path: challenger.json
+          key: agent-state-${{ github.run_id }}
+          restore-keys: agent-state-
+
+      - name: Run publisher.py
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          META_AD_ACCOUNT_ID: ${{ secrets.META_AD_ACCOUNT_ID }}
+          META_PAGE_ID: ${{ secrets.META_PAGE_ID }}
+        run: python publisher.py
+
+      # Save updated challenger.json (now contains the live Meta ad ID)
+      - name: Save challenger with live ad ID
+        uses: actions/cache@v4
+        with:
+          path: challenger.json
+          key: agent-state-${{ github.run_id }}

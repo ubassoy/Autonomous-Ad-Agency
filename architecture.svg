@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="900" height="520" font-family="'Courier New', monospace">
+
+  <!-- Background -->
+  <rect width="900" height="520" fill="#0d1117" rx="12"/>
+
+  <!-- Grid lines subtle -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff08" stroke-width="1"/>
+    </pattern>
+    <filter id="glow-green">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-orange">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#00ff88"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#ff6b35"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#4da6ff"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#bf7fff"/>
+    </marker>
+  </defs>
+  <rect width="900" height="520" fill="url(#grid)" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="38" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold" letter-spacing="4" opacity="0.9">ACME AD AGENT — SYSTEM ARCHITECTURE</text>
+  <line x1="180" y1="48" x2="720" y2="48" stroke="#ffffff18" stroke-width="1"/>
+
+  <!-- ── SCRIPT BOXES ── -->
+
+  <!-- 1. ORCHESTRATOR -->
+  <rect x="60" y="80" width="175" height="100" rx="8" fill="#0d2b1a" stroke="#00ff88" stroke-width="1.5"/>
+  <rect x="60" y="80" width="175" height="28" rx="8" fill="#00ff8822"/>
+  <rect x="60" y="100" width="175" height="8" fill="#00ff8822"/>
+  <text x="147" y="99" text-anchor="middle" fill="#00ff88" font-size="11" font-weight="bold" letter-spacing="2" filter="url(#glow-green)">ORCHESTRATOR.PY</text>
+  <text x="147" y="122" text-anchor="middle" fill="#aaffcc" font-size="10">Reads champion ad</text>
+  <text x="147" y="137" text-anchor="middle" fill="#aaffcc" font-size="10">Calls Gemini AI</text>
+  <text x="147" y="152" text-anchor="middle" fill="#aaffcc" font-size="10">Generates challenger ad</text>
+  <text x="147" y="167" text-anchor="middle" fill="#00ff8888" font-size="9">→ saves challenger.json</text>
+
+  <!-- 2. PUBLISHER -->
+  <rect x="362" y="80" width="175" height="100" rx="8" fill="#2b1a0d" stroke="#ff6b35" stroke-width="1.5"/>
+  <rect x="362" y="80" width="175" height="28" rx="8" fill="#ff6b3522"/>
+  <rect x="362" y="100" width="175" height="8" fill="#ff6b3522"/>
+  <text x="449" y="99" text-anchor="middle" fill="#ff6b35" font-size="11" font-weight="bold" letter-spacing="2" filter="url(#glow-orange)">PUBLISHER.PY</text>
+  <text x="449" y="122" text-anchor="middle" fill="#ffccaa" font-size="10">Reads challenger.json</text>
+  <text x="449" y="137" text-anchor="middle" fill="#ffccaa" font-size="10">Calls Meta Ads API</text>
+  <text x="449" y="152" text-anchor="middle" fill="#ffccaa" font-size="10">Publishes as PAUSED</text>
+  <text x="449" y="167" text-anchor="middle" fill="#ff6b3588" font-size="9">→ saves live ad_id</text>
+
+  <!-- 3. GRADER -->
+  <rect x="665" y="80" width="175" height="100" rx="8" fill="#0d1a2b" stroke="#4da6ff" stroke-width="1.5"/>
+  <rect x="665" y="80" width="175" height="28" rx="8" fill="#4da6ff22"/>
+  <rect x="665" y="100" width="175" height="8" fill="#4da6ff22"/>
+  <text x="752" y="99" text-anchor="middle" fill="#4da6ff" font-size="11" font-weight="bold" letter-spacing="2">GRADER.PY</text>
+  <text x="752" y="122" text-anchor="middle" fill="#aaccff" font-size="10">Polls Meta every 6h</text>
+  <text x="752" y="137" text-anchor="middle" fill="#aaccff" font-size="10">3-stage evaluation</text>
+  <text x="752" y="152" text-anchor="middle" fill="#aaccff" font-size="10">Kills or scales ad</text>
+  <text x="752" y="167" text-anchor="middle" fill="#4da6ff88" font-size="9">→ logs to experiment_log.json</text>
+
+  <!-- 4. MEMORY MANAGER -->
+  <rect x="362" y="330" width="175" height="100" rx="8" fill="#1e0d2b" stroke="#bf7fff" stroke-width="1.5"/>
+  <rect x="362" y="330" width="175" height="28" rx="8" fill="#bf7fff22"/>
+  <rect x="362" y="350" width="175" height="8" fill="#bf7fff22"/>
+  <text x="449" y="349" text-anchor="middle" fill="#bf7fff" font-size="11" font-weight="bold" letter-spacing="2" filter="url(#glow-orange)">MEMORY_MANAGER.PY</text>
+  <text x="449" y="372" text-anchor="middle" fill="#ddaaff" font-size="10">Reads all past experiments</text>
+  <text x="449" y="387" text-anchor="middle" fill="#ddaaff" font-size="10">Asks Gemini for patterns</text>
+  <text x="449" y="402" text-anchor="middle" fill="#ddaaff" font-size="10">Runs every Sunday</text>
+  <text x="449" y="417" text-anchor="middle" fill="#bf7fff88" font-size="9">→ updates baseline.md</text>
+
+  <!-- ── EXTERNAL SERVICES ── -->
+
+  <!-- Gemini -->
+  <rect x="60" y="330" width="175" height="70" rx="8" fill="#1a1a0d" stroke="#ffd700" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="147" y="358" text-anchor="middle" fill="#ffd700" font-size="11" font-weight="bold" letter-spacing="1">GEMINI AI</text>
+  <text x="147" y="375" text-anchor="middle" fill="#ffe97788" font-size="10">google.generativeai</text>
+  <text x="147" y="390" text-anchor="middle" fill="#ffe97766" font-size="9">gemini-1.5-flash</text>
+
+  <!-- Meta Ads API -->
+  <rect x="665" y="330" width="175" height="70" rx="8" fill="#0d1a1a" stroke="#1877f2" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="752" y="358" text-anchor="middle" fill="#4da6ff" font-size="11" font-weight="bold" letter-spacing="1">META ADS API</text>
+  <text x="752" y="375" text-anchor="middle" fill="#88ccff88" font-size="10">graph.facebook.com</text>
+  <text x="752" y="390" text-anchor="middle" fill="#88ccff66" font-size="9">v19.0</text>
+
+  <!-- ── DATA FILES ── -->
+  <!-- template.json -->
+  <rect x="147" y="245" width="120" height="36" rx="5" fill="#161616" stroke="#ffffff22" stroke-width="1"/>
+  <text x="207" y="260" text-anchor="middle" fill="#ffffff55" font-size="9" letter-spacing="1">📄 template.json</text>
+  <text x="207" y="274" text-anchor="middle" fill="#ffffff33" font-size="8">champion ad + metrics</text>
+
+  <!-- challenger.json -->
+  <rect x="388" y="208" width="124" height="36" rx="5" fill="#161616" stroke="#ffffff22" stroke-width="1"/>
+  <text x="450" y="223" text-anchor="middle" fill="#ffffff55" font-size="9" letter-spacing="1">📄 challenger.json</text>
+  <text x="450" y="237" text-anchor="middle" fill="#ffffff33" font-size="8">new ad + live ad_id</text>
+
+  <!-- experiment_log.json -->
+  <rect x="652" y="245" width="140" height="36" rx="5" fill="#161616" stroke="#ffffff22" stroke-width="1"/>
+  <text x="722" y="260" text-anchor="middle" fill="#ffffff55" font-size="9" letter-spacing="1">📄 experiment_log.json</text>
+  <text x="722" y="274" text-anchor="middle" fill="#ffffff33" font-size="8">all results history</text>
+
+  <!-- baseline.md -->
+  <rect x="388" y="455" width="124" height="36" rx="5" fill="#161616" stroke="#bf7fff44" stroke-width="1"/>
+  <text x="450" y="470" text-anchor="middle" fill="#bf7fff88" font-size="9" letter-spacing="1">📄 baseline.md</text>
+  <text x="450" y="484" text-anchor="middle" fill="#bf7fff55" font-size="8">rules + AI insights</text>
+
+  <!-- ── ARROWS ── -->
+
+  <!-- Orchestrator → template.json (reads) -->
+  <line x1="147" y1="180" x2="180" y2="245" stroke="#ffffff22" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Orchestrator → Gemini (calls AI) -->
+  <line x1="100" y1="180" x2="100" y2="330" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow-green)" stroke-dasharray="6,3" opacity="0.6"/>
+
+  <!-- Orchestrator → Publisher (challenger.json) -->
+  <line x1="235" y1="130" x2="362" y2="130" stroke="#00ff88" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="298" y="122" text-anchor="middle" fill="#00ff8866" font-size="8">challenger.json</text>
+
+  <!-- Publisher → Meta (publish) -->
+  <line x1="537" y1="130" x2="665" y2="130" stroke="#ff6b35" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <text x="601" y="122" text-anchor="middle" fill="#ff6b3566" font-size="8">publish ad</text>
+
+  <!-- Grader → Meta (poll) -->
+  <line x1="752" y1="180" x2="752" y2="330" stroke="#4da6ff" stroke-width="1.5" marker-end="url(#arrow-blue)" stroke-dasharray="6,3" opacity="0.7"/>
+
+  <!-- Grader → experiment_log -->
+  <line x1="722" y1="180" x2="722" y2="245" stroke="#ffffff22" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Memory Manager ← experiment_log (reads) -->
+  <line x1="680" y1="263" x2="537" y2="355" stroke="#ffffff15" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Memory Manager → Gemini (calls AI) -->
+  <line x1="390" y1="380" x2="235" y2="380" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow-green)" stroke-dasharray="6,3" opacity="0.6"/>
+
+  <!-- Memory Manager → baseline.md -->
+  <line x1="449" y1="430" x2="449" y2="455" stroke="#bf7fff" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+
+  <!-- baseline.md → Orchestrator (feedback loop) -->
+  <path d="M 388 473 Q 40 473 40 130 L 60 130" stroke="#bf7fff" stroke-width="1.5" fill="none" marker-end="url(#arrow-purple)" stroke-dasharray="6,3" opacity="0.7"/>
+  <text x="28" y="310" text-anchor="middle" fill="#bf7fff66" font-size="8" transform="rotate(-90, 28, 310)">learns over time</text>
+
+  <!-- ── GRADER STAGE LABELS ── -->
+  <rect x="665" y="200" width="175" height="62" rx="5" fill="#0a1520" stroke="#4da6ff22" stroke-width="1"/>
+  <text x="752" y="216" text-anchor="middle" fill="#4da6ff88" font-size="9" font-weight="bold" letter-spacing="1">EVALUATION STAGES</text>
+  <text x="680" y="231" fill="#4da6ff66" font-size="8">⏱  6h  → CTR &lt; 0.5% or CPC &gt; $5 → KILL</text>
+  <text x="680" y="244" fill="#4da6ff66" font-size="8">⏱ 48h  → ROAS &lt; 2.0 → KILL</text>
+  <text x="680" y="257" fill="#4da6ff66" font-size="8">⏱ 72h  → ROAS ≥ 2.5 → SCALE ✓</text>
+
+  <!-- ── LEGEND ── -->
+  <rect x="60" y="450" width="240" height="50" rx="5" fill="#0a0a0a" stroke="#ffffff11" stroke-width="1"/>
+  <text x="75" y="466" fill="#ffffff44" font-size="8" font-weight="bold" letter-spacing="1">LEGEND</text>
+  <line x1="75" y1="476" x2="100" y2="476" stroke="#00ff88" stroke-width="1.5"/>
+  <text x="106" y="479" fill="#ffffff44" font-size="8">script → script flow</text>
+  <line x1="75" y1="490" x2="100" y2="490" stroke="#ffd700" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="106" y="493" fill="#ffffff44" font-size="8">external API call</text>
+  <line x1="165" y1="476" x2="190" y2="476" stroke="#bf7fff" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="196" y="479" fill="#ffffff44" font-size="8">learning loop</text>
+  <line x1="165" y1="490" x2="190" y2="490" stroke="#ffffff22" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="196" y="493" fill="#ffffff44" font-size="8">file read/write</text>
+
+  <!-- GitHub Actions badge -->
+  <rect x="665" y="450" width="175" height="50" rx="5" fill="#0a0a0a" stroke="#ffffff11" stroke-width="1"/>
+  <text x="752" y="468" text-anchor="middle" fill="#ffffff44" font-size="8" font-weight="bold" letter-spacing="1">SCHEDULED BY</text>
+  <text x="752" y="484" text-anchor="middle" fill="#4da6ff66" font-size="9">⚙ GitHub Actions</text>
+  <text x="752" y="496" text-anchor="middle" fill="#ffffff33" font-size="8">grader: every 6h · memory: every Sunday</text>
+
+</svg>

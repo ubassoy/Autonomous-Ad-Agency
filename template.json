@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "campaign_id": "12039485739",
+    "ad_set_id": "12039485740",
+    "ad_id": "12039485741",
+    "last_updated": "2026-03-10T19:00:00Z"
+  },
+  "performance_metrics": {
+    "spend_72h": 150.00,
+    "revenue_72h": 450.00,
+    "current_roas": 3.0
+  },
+  "creative_variables": {
+    "headline": "Stop Wasting Ad Spend Now.",
+    "primary_text": "AI runs 24/7 testing ad variations while you sleep. Kill guesswork. Boost ROAS.",
+    "call_to_action": "LEARN_MORE",
+    "image_hash": "abc123xyz456_hero_image_01"
+  }
+}

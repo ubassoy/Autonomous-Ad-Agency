@@ -1,0 +1,98 @@
+[
+  {
+    "timestamp": "2026-02-28T22:41:10.221400",
+    "ad_id": "12039485741",
+    "metrics": {
+      "spend": 38.2,
+      "clicks": 144,
+      "impressions": 19800,
+      "revenue": 57.3,
+      "hours_active": 72.1
+    },
+    "verdict": "LOSER - Final ROAS 1.50 failed the 2.5 target."
+  },
+  {
+    "timestamp": "2026-03-01T08:14:32.441200",
+    "ad_id": "12039485741",
+    "metrics": {
+      "spend": 42.8,
+      "clicks": 312,
+      "impressions": 18540,
+      "revenue": 128.4,
+      "hours_active": 72.2
+    },
+    "verdict": "WINNER - Final ROAS 3.00 beats the 2.5 target."
+  },
+  {
+    "timestamp": "2026-03-03T09:22:11.882100",
+    "ad_id": "12039485802",
+    "metrics": {
+      "spend": 18.5,
+      "clicks": 87,
+      "impressions": 22100,
+      "revenue": 0.0,
+      "hours_active": 6.4
+    },
+    "verdict": "LOSER - Bad early signals. CTR: 0.39%, CPC: $0.21"
+  },
+  {
+    "timestamp": "2026-03-05T14:05:44.119300",
+    "ad_id": "12039485855",
+    "metrics": {
+      "spend": 49.1,
+      "clicks": 408,
+      "impressions": 31200,
+      "revenue": 196.4,
+      "hours_active": 72.1
+    },
+    "verdict": "WINNER - Final ROAS 4.00 beats the 2.5 target."
+  },
+  {
+    "timestamp": "2026-03-06T18:33:02.774500",
+    "ad_id": "12039485901",
+    "metrics": {
+      "spend": 31.6,
+      "clicks": 190,
+      "impressions": 27800,
+      "revenue": 44.24,
+      "hours_active": 48.3
+    },
+    "verdict": "LOSER - ROAS 1.40 fell below fatigue threshold of 2.0 at 48h."
+  },
+  {
+    "timestamp": "2026-03-08T11:47:29.334700",
+    "ad_id": "12039485960",
+    "metrics": {
+      "spend": 47.3,
+      "clicks": 519,
+      "impressions": 38900,
+      "revenue": 212.85,
+      "hours_active": 72.0
+    },
+    "verdict": "WINNER - Final ROAS 4.50 beats the 2.5 target."
+  },
+  {
+    "timestamp": "2026-03-09T07:12:55.663200",
+    "ad_id": "12039486011",
+    "metrics": {
+      "spend": 9.4,
+      "clicks": 31,
+      "impressions": 14200,
+      "revenue": 0.0,
+      "hours_active": 6.1
+    },
+    "verdict": "LOSER - Bad early signals. CTR: 0.22%, CPC: $0.30"
+  },
+  {
+    "timestamp": "2026-03-10T16:28:03.991400",
+    "ad_id": "12039486074",
+    "metrics": {
+      "spend": 44.9,
+      "clicks": 377,
+      "impressions": 29600,
+      "revenue": 134.7,
+      "hours_active": 72.4
+    },
+    "verdict": "WINNER - Final ROAS 3.00 beats the 2.5 target."
+  }
+]

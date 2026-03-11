@@ -1,0 +1,29 @@
+# === SECRETS — never commit these ===
+.env
+
+# === AI-generated output files ===
+challenger.json
+experiment_log.json
+
+# === Python cache ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# === Virtual environments ===
+venv/
+.venv/
+env/
+ENV/
+
+# === OS junk ===
+.DS_Store
+Thumbs.db
+
+# === IDE files ===
+.vscode/
+.idea/
+*.swp
+*.swo
