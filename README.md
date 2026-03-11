@@ -131,6 +131,3 @@ After running several experiments, `experiment_log.json` looks like this (see `e
 
 The full 8-experiment sample (`experiment_log_sample.json`) includes 4 winners, 4 losers, and all 3 kill stages demonstrated.
 
-## License
-
-MIT
