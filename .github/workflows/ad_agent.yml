@@ -134,6 +134,7 @@ jobs:
       # After memory_manager updates baseline.md, commit it back
       # to your repo so the AI's new insights are permanently saved
       - name: Commit updated baseline.md back to repo
+      continue-on-error: true      
         run: |
           git config user.name "Artie Bot"
           git config user.email "artie@acme-ad-agent.bot"
