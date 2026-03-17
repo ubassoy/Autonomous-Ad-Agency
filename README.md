@@ -99,7 +99,6 @@ acme-ad-agent/
 ## Safety Notes
 
 - All ads are published in `PAUSED` status. **You must manually activate them** in Meta Ads Manager after reviewing.
-- Never commit your `.env` file. It is listed in `.gitignore`.
 - The `Max Daily Budget Per Ad` is enforced at the Ad Set level in Meta — make sure your Ad Set budget matches the `$50.00` limit in `baseline.md`.
 
 ## Sample Output
